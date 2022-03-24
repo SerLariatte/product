@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상품 페이지</title>
+
+  <style>
+    .btn{ margin-top: 10px;}
+
+    .content-wrap{ margin-top: 30px; }
+    .content-wrap > #header,
+    .content-wrap > #body
+         {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+        }
+
+    .content-wrap > #header{ border: 1px solid black; font-weight: bold; text-align: center;}
+
+
+  </style>
+
+
+</head>
+<body>
+<h3>Product</h3>
+<hr>
+<form action="">
+
+  <div>
+    <label for="pname">이름</label>
+    <input type="text" name="pname" id="pname">
+  </div>
+
+  <div>
+    <label for="pquantity">수량</label>
+    <input type="text" name="" id="pquantity">
+  </div>
+
+  <div>
+    <label for="pprice">가격</label>
+    <input type="text" name="" id="pprice">
+  </div>
+
+  <div class="btn">
+    <button type="button" id="saveBtn">등록</button>
+  </div>
+
+</form>
+
+
+<div class="content-wrap">
+
+    <div id="header">
+      <div>ID</div>
+      <div>이름</div>
+      <div>수량</div>
+      <div>가격</div>
+    </div>
+
+    <div id="body">
+      <!-- 출력 위치
+      <div>ID</div>
+      <div>이름</div>
+      <div>수량</div>
+      <div>가격</div> -->
+    </div>
+
+
+  </div>
+
+<script>
+
+  // 등록버튼 리스너
+  saveBtn.addEventListener('click', create_f);
+
+   //상품등록
+   function create_f(e){
+      const data = {};
+      data.pname = pname.value;
+      data.pquantity = pquantity.value;
+      data.pprice = pprice.value;
+
+      fetch('/product/api',{
+        method:'POST',
+        headers: { 'Content-Type':'application/json'},
+        body: JSON.stringify(data)  // js객체 => json포맷 문자열 변환
+      }).then(res=>res.json())         // json포맷 문자열 => js객체 변환
+        .then(res=>{console.log(res)})
+        .catch(err=>{console.error('Err:',err)});
+      console.log('after fetch');
+    }
+
+  
+</script>
+
+
+</body>
+</html>
